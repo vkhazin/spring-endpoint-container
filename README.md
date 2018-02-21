@@ -1,3 +1,6 @@
 # README #
 
-Replace as a part of a pull-request
+* Overvew
+ 
+ Create a Spring.io & Gradle seed project for end-point returning json payload
+
