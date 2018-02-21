@@ -16,15 +16,10 @@ PASSWORD=$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)
 
 curl $JENKINS_URL/jnlpJars/jenkins-cli.jar -o jenkins-cli.jar
 PLUGINS="dashboard-view bitbucket docker-custom-build-environment docker-plugin workflow-cps momentjs pipeline-model-declarative-agent pipeline-input-step handlebars pipeline-build-step pipeline-stage-view git-server ace-editor workflow-cps-global-lib workflow-multibranch workflow-job pipeline-stage-tags-metadata durable-task pipeline-graph-analysis jackson2-api pipeline-stage-step workflow-durable-task-step pipeline-model-definition ssh-slaves workflow-basic-steps jquery-detached token-macro pipeline-model-extensions workflow-support docker-java-api pipeline-rest-api pipeline-model-api pipeline-milestone-step workflow-aggregator docker-workflow"
+
 for PLUGIN in $(echo ${PLUGINS}); do
     java -jar jenkins-cli.jar -s $JENKINS_URL install-plugin ${PLUGIN} --username "$USERNAME" --password "$PASSWORD"
 done
-# Required for Bitbucket webhook
-#java -jar jenkins-cli.jar -s $JENKINS_URL install-plugin bitbucket --username "$USERNAME" --password "$PASSWORD"
-# Required for using Aws Credentials
-#java -jar jenkins-cli.jar -s $JENKINS_URL install-plugin aws-credentials --username "$USERNAME" --password "$PASSWORD"
-# Required for using custom build container
-#java -jar jenkins-cli.jar -s $JENKINS_URL install-plugin docker-custom-build-environment --username "$USERNAME" --password "$PASSWORD"
 
 # Grant docker permissions to Jenkins user
 sudo groupadd docker
