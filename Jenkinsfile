@@ -10,7 +10,7 @@ node {
     stage("Build") {
         dir("app") {
             currentDir = sh(script: "pwd")
-            sh "docker run -v $(pwd):/tmp ${dockerBuildImageTag} gradle build"
+            sh "docker run -v ${currentDir}:/tmp ${dockerBuildImageTag} gradle build"
         }
     }
     
