@@ -30,6 +30,6 @@ node {
 //                execImage.push('0.1.0')
 //            }
 	}
+        archiveArtifacts allowEmptyArchive: true, artifacts: 'app.jar'
     }
-    archiveArtifacts 'app.jar' 
 } 
