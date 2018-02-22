@@ -1,17 +1,35 @@
 dockerBuildImageTag = "gradle:4.5.1-jdk8-alpine"
 dockerExecImageTag = "vkhazin:spring-endpoint-container"
 
+properties([
+    parameters([
+        stringParam(name: 'GIT_BRANCH',
+                    defaultValue: 'master',
+                    description: '')
+    ])
+])
+
 node {
-  
-    stage("Get latest docker build image") {
-        sh "docker pull gradle:4.5.1-jdk8-alpine"
-    }
-    
+
     stage("Build") {
-        dir("app") {
-            currentDir = sh(script: "pwd", returnStdout: true).trim()
-            sh "docker run -v ${currentDir}:/tmp -w /tmp ${dockerBuildImageTag} gradle build"
+        gradle = docker.image(dockerBuildImageTag)
+        gradle.pull()
+        gradle.inside {
+            git branch: params.GIT_BRANCH, 
+		url: 'https://vedarn@bitbucket.org/vedarn/spring-endpoint-container.git'
+            sh 'cd app && gradle --stacktrace build'
         }
     }
-    
-}
+
+    stage("Create exec Docker Image") {
+        sh "cp apps/libs/gs-actuator-service*.jar docker/exec/"
+	dir("${env.WORKSPACE}/docker/exec") {
+	    execImage = docker.build(dockerExecImageTag)
+//            docker.withRegistry("${dockerRegistry}", 'gitlab_docker') {
+//                execImage.push(version)
+//            }
+
+	}
+    } 
+
+} 
