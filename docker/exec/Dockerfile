@@ -1,4 +1,5 @@
 FROM openjdk:jre-alpine
-COPY gs-actuator-service-*.jar /
+
+COPY app.jar /
 WORKDIR /tmp
 
