@@ -26,12 +26,12 @@ sh jenkins/setup_jenkins_ami_linux.sh
 * After installation login using https://public-ip-address with password listed at the end of setup script
 * You can skip start-up window, all of the needed plugins are installed already
 
-### Why NginX?
+#### Why NginX?
 * Jenkins is not as easy to configure to use encryption: https://wiki.jenkins-ci.org/display/JENKINS/Starting+and+Accessing+Jenkins
 * NginX reverse proxy is somewhat easier to setup and to encrypt traffic to Jenkins
 * See [nginx.sh](https://bitbucket.org/vedarn/spring-endpoint-container/src/7e05e60337e3e715f4d7ec65bc91b99a50d4f2f3/jenkins/nginx.sh?at=ned.radev%2Finitial_working_branch) for details
 
-# Project Setup
+### Project Setup
 * After skipping the setup wizard an empty dashboard is presented:
 ![alt text](./screen-capture/no-projects.png "Empty Jenkins Dashboard")
 * Select 'create new jobs' link
@@ -59,12 +59,13 @@ ned.radev/initial_working_branch
 [Pipeline] End of Pipeline
 Finished: SUCCESS
 ```
-# Jenkinsfile
+### Jenkinsfile
 Jenkins pipeline build relies on pre-created file in source repo, ususally it is named Jenkinsfile (name could be customized). It contains Groovy based DSL script. See more details in project's [Jenkinsfile](https://bitbucket.org/vedarn/spring-endpoint-container/src/7e05e60337e3e715f4d7ec65bc91b99a50d4f2f3/Jenkinsfile?at=ned.radev%2Finitial_working_branch).
 
-# Docker and Gradle
+### Docker and Gradle
 Build delivery is a Docker image containng a JAR file built also in a Docker container. The JAR file is built using one of the official Gradle docker images 'gradle:4.5.1-jdk8-alpine'. It is pulled during build execution. After a successful build of the JAR file it is packed in a new Docker image based on 'openjdk:jre-alpine' (Alpine Linux with JRE).
-# Starting RESTful Web Service wuth docker
+
+### Starting RESTful Web Service with docker
 * Execute
 ```
 docker pull vkhazin:spring-endpoint-container
