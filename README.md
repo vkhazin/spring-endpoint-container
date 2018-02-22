@@ -64,3 +64,17 @@ Jenkins pipeline build relies on pre-created file in source repo, ususally it is
 
 # Docker and Gradle
 Build delivery is a Docker image containng a JAR file built also in a Docker container. The JAR file is built using one of the official Gradle docker images 'gradle:4.5.1-jdk8-alpine'. It is pulled during build execution. After a successful build of the JAR file it is packed in a new Docker image based on 'openjdk:jre-alpine' (Alpine Linux with JRE).
+# Starting RESTful Web Service wuth docker
+* Execute
+```
+docker pull vkhazin:spring-endpoint-container
+docker run -p 9000:9000 vkhazin:spring-endpoint-container java -jar /app.jar
+```
+* Check what it returns with:
+```
+curl http://localhost:9000/hello-world
+```
+* It should return
+```
+{"message":"Hello World"}
+```
