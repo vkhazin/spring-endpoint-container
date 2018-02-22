@@ -44,8 +44,8 @@ sudo sleep 5  # Waits 5 seconds.
 sudo chkconfig jenkins on
 
 # Check that jenkins is up
-echo "Jenkins public ip = http://$(curl ifconfig.co -s)"
-echo "Jenkins public dns =  $(curl -s http://169.254.169.254/latest/meta-data/public-hostname)"
+echo "Jenkins via public ip = https://$(curl ifconfig.co -s)"
+echo "Jenkins via public dns =  https://$(curl -s http://169.254.169.254/latest/meta-data/public-hostname)"
 echo "Jenkins admin password: $(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)"
 
 
