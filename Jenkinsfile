@@ -22,7 +22,7 @@ node {
     }
 
     stage("Create exec Docker Image") {
-        sh "cp app/libs/gs-actuator-service*.jar docker/exec/"
+        sh "cp app/build/libs/gs-actuator-service-*.jar docker/exec/"
 	dir("${env.WORKSPACE}/docker/exec") {
 	    execImage = docker.build(dockerExecImageTag)
 //            docker.withRegistry("${dockerRegistry}", 'gitlab_docker') {
