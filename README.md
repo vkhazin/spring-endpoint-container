@@ -40,7 +40,7 @@ sh jenkins/setup_jenkins_ami_linux.sh
 * Select 'Ok' to continue
 * On the projecs configuration page in 'General' section click on 'This project is parameterized'. Add new String parameter.
 ![alt text](./docs/images/03_configure_parameter_1.png "New String parameter")
-* Name the parameter 'GIT\_BRANCH' and set default value to 'master'.
+* Name the parameter ``'GIT_BRANCH'`` and set default value to 'master'.
 ![alt text](./docs/images/03_configure_parameter_2.png "New String parameter")
 * Scroll down to 'Pipeline' and from 'Definition' drop-down list select 'Pipeline script from SCM' option.
 * From newly-appeared drop-down list 'SCM' select 'Git' option
@@ -53,7 +53,7 @@ ned.radev/initial_working_branch
 * Select 'Save' button and you should be redirected to project dashboard
 * On the left hand select 'Build with parameters' link to trigger a new build
 ![alt text](./docs/images/05_no_builds.png "Starting first build")
-* New page appears where build requieres input value for parameter 'GIT\_BRANCH'. Paste following branch and click on Build button:
+* New page appears where build requieres input value for parameter ``'GIT_BRANCH'``. Paste following branch and click on Build button:
 ```
 ned.radev/initial_working_branch
 ```
