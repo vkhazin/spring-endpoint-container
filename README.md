@@ -122,6 +122,8 @@ Type `DevTools`, `Web` and `Jersey` in the dependencies field
     ```
         curl -O https://bitbucket.org/andreichern0v/spring-endpoint-container/raw/d047f436b9895ebc24684ec3b3d2888f1f6c56ab/install_aws_jenkins.sh && chmod 755 install_aws_jenkins.sh && bash install_aws_jenkins.sh && rm install_aws_jenkins.sh
     ```
+3. At the end of script working you will see link to Jenkins instance and admin password.
+
 ## Build docker image local
 You can build docker image and run app on local machine using next steps:
 

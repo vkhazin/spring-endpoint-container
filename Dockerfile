@@ -1,4 +1,4 @@
-FROM  frekele/gradle:4.3.1-jdk8 as builder
+FROM  frekele/gradle:4.3.1-jdk8
 
 COPY src /app/src
 ADD build.gradle /app/build.gradle
@@ -21,7 +21,7 @@ LABEL maintainer="vladimir.khazin@icssolutions.ca"
 EXPOSE 8081
 HEALTHCHECK NONE
 
-COPY --from=builder '/app/out/app.jar' app/app.jar
+COPY --from=0 '/app/out/app.jar' app/app.jar
 
 RUN apk update && apk add bash
 RUN mkdir /logs && ln -sf /dev/stdout /logs/app.log
