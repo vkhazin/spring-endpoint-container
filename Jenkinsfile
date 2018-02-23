@@ -3,8 +3,8 @@ pipeline {
     agent none
 
     parameters {
-        string(name: 'GIT_BRANCH', defaultValue: 'cicd_jenkins_job', description: 'Which branch should use to work', trim: true)
-        string(name: 'REPOSITORY_URL', defaultValue: 'https://andreichern0v@bitbucket.org/andreichern0v/spring-endpoint-container.git', description: '', trim: true)
+        string(name: 'GIT_BRANCH', defaultValue: 'cicd_jenkins_job', description: 'Which branch should use to work')
+        string(name: 'REPOSITORY_URL', defaultValue: 'https://andreichern0v@bitbucket.org/andreichern0v/spring-endpoint-container.git', description: '')
     }
 
     stages {
