@@ -17,7 +17,7 @@ pipeline {
             agent {
                 docker { 
                     image 'frekele/gradle:4.3.1-jdk8'
-                    args '-v ~/gradle-chache/.gradle:/home/gradle/.gradle/'
+                    args '-v $HOME/gradle-chache/.gradle:/home/gradle/.gradle/'
                 }
             }
             steps {
