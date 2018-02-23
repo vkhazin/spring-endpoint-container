@@ -10,11 +10,9 @@ pipeline {
             steps {
                 checkout scm
 
-                script {
-                    projectName = git.getGitRepositoryName()
-                    githubOrg = git.getGitOrgName()
-                    gitCommit = manifest.getGitCommit()
-                }
+                // projectName = git.getGitRepositoryName()
+                // githubOrg = git.getGitOrgName()
+                // gitCommit = manifest.getGitCommit()
             }
         }
 
@@ -57,9 +55,8 @@ pipeline {
                 // sh 'docker push vkhazin:spring-endpoint-container:initializr'
             }
         }
-    }
 
-    post {
+        post {
         success {
             sh "echo 'Pipeline operation completed successfully - ${currentBuild.fullDisplayName}'"
             // slackSend color: 'green', message: "Pipeline operation completed successfully - ${currentBuild.fullDisplayName}" 
@@ -75,5 +72,6 @@ pipeline {
             // slackSend color: 'yellow', message: "Pipeline unstable - ${currentBuild.fullDisplayName}"    
             // mail to:"me@example.com", subject:"UNSTABLE: ${currentBuild.fullDisplayName}", body: "Boo, we failed."
         }
+    }
     }
 }
