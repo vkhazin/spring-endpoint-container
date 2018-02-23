@@ -1,57 +1,35 @@
-//  https://gist.github.com/abayer/925c68132b67254147efd8b86255fd76
-pipeline {
-    agent none
+node {
+    def app
     parameters {
-        string(name: 'GIT_BRANCH', defaultValue: 'cicd_jenkins_job', description: 'Which branch should use to work')
-        string(name: 'REPOSITORY_URL', defaultValue: 'https://andreichern0v@bitbucket.org/andreichern0v/spring-endpoint-container.git', description: '')
+        string(name: 'GIT_BRANCH', defaultValue: 'master', description: 'Which branch should use to work')
+        string(name: 'REPOSITORY_URL', defaultValue: 'git@bitbucket.org:vk-smith/spring-endpoint-container.git', description: '')
     }
-    stages {
-        stage ("Checkout SCM") {
-            agent any
-            steps {
-                checkout scm
-            }
-        }
+    environment {
+        DOCKER_TAG = "vkhazin:spring-endpoint-container"
+        MAINTAINER = "vladimir.khazin@icssolutions.ca"
+        DOCKER_REGISTRY = "https://registry.hub.docker.com"
+    }
 
-        stage('Build App') {
-            agent {
-                docker { 
-                    image 'frekele/gradle:4.3.1-jdk8'
-                    args '-v $HOME/gradle-chache/.gradle:/home/gradle/.gradle/'
-                }
-            }
-            steps {
-                sh 'whoami'
-                sh 'ls -a'
-                sh 'gradle build -x test'
-                sh 'ls -a'
-                sh 'pwd'
-            }
-        }
+    stage('Clone repository') {
+        checkout scm
+    }
 
-        stage('Build Docker image') {
-            agent {
-                docker { 
-                    image 'openjdk:jre-alpine'
-                    args '-v ~/gradle-chache/.gradle:/home/gradle/.gradle/'
-                }
-            }
-            steps {
-                sh 'whoami'
-                sh 'ls -a'
-                sh 'pwd'
-            }
-        }
+    stage('Build app') {
+        /* build docker image as "docker build" from command line */
+         // '-v $HOME/gradle-chache/.gradle:/home/gradle/.gradle/'
+        app = docker.build(DOCKER_TAG)
+    }
 
-        stage('Push to DockerHub') {
-            steps {
-                sh 'whoami'
-                sh 'ls -a'
-                sh 'pwd'
-                // sh 'docker build -t vkhazin:spring-endpoint-container:initializr .'
-                // sh 'docker push vkhazin:spring-endpoint-container:initializr'
-            }
-        }
+    stage('Push app to Docker Hub') {
+        /* push the image with two tags:
+         * 1) repository branch name as tag
+         * 2) the 'latest' tag
+         * its easy becasuse all  layers will be reused */
+        sh "docker images -a"
+        // docker.withRegistry(${DOCKER_REGISTRY}, 'docker-registry-credentials') {
+        //     app.push(${params.GIT_BRANCH})
+        //     app.push("latest")
+        // }
     }
 
     post {
