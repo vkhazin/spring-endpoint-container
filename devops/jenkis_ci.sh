@@ -35,7 +35,12 @@ PLUGINS="$PLUGINS aws-credentials"
 # https://wiki.jenkins.io/display/JENKINS/Dashboard+View
 PLUGINS="$PLUGINS dashboard-view"
 
-# 3.6 Installation of plugins
+# 3.8 Pipeline Stage View
+# https://wiki.jenkins.io/display/JENKINS/Pipeline+Stage+View+Plugin
+PLUGINS="$PLUGINS pipeline-stage-view"
+
+
+# 3.9 Installation of plugins
 # JENKINS CLI command https://gist.github.com/amokan/3881064
 for CURRENT_PLUGIN in $(echo ${PLUGINS});
 do {
