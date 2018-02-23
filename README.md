@@ -33,27 +33,33 @@ sh jenkins/setup_jenkins_ami_linux.sh
 
 ### Project Setup
 * After skipping the setup wizard an empty dashboard is presented:
-![alt text](./screen-capture/no-projects.png "Empty Jenkins Dashboard")
+![alt text](./docs/images/01_no_projects.png "Empty Jenkins Dashboard")
 * Select 'create new jobs' link
-* Enter project name and select 'Pipeline Project':
-![alt text](./screen-capture/project-name.png "Project name")
+* Enter project name and select 'Pipeline':
+![alt text](./docs/images/02_new_item.png "New Pipeline")
 * Select 'Ok' to continue
-* On the project configuration page scroll down to 'Pipeline' and from 'Definition' drop-down list select 'Pipeline script from SCM' option.
+* On the projecs configuration page in 'General' section click on 'This project is parameterized'. Add new String parameter.
+![alt text](./docs/images/03_configure_parameter_1.png "New String parameter")
+* Name the parameter GIT_BRANCH and set default value to 'master'.
+![alt text](./docs/images/03_configure_parameter_2.png "New String parameter")
+* Scroll down to 'Pipeline' and from 'Definition' drop-down list select 'Pipeline script from SCM' option.
 * From newly-appeared drop-down list 'SCM' select 'Git' option
 * Paste repository URL in 'Repository URL' text box: https://bitbucket.org/vedarn/spring-endpoint-container.git and configure credentials if applicable
 * Paste repository branch in 'Branch specifier' text box:
 ```
 ned.radev/initial_working_branch
 ```
+![alt text](./docs/images/04_configure_pipeline.png "Configure Pipeline")
 * Select 'Save' button and you should be redirected to project dashboard
-* On the left hand select 'Build now' link to trigger a new build
-* A build progress indicator should appear. The first build may fail. Refresh the job page, now 'Build now' link should have become 'Build with parameters'. Click it.
+* On the left hand select 'Build with parameters' link to trigger a new build
+![alt text](./docs/images/05_no_builds.png "Starting first build")
 * New page appears where build requieres input value for parameter 'GIT_BRANCH'. Paste following branch and click on Build button:
 ```
 ned.radev/initial_working_branch
 ```
-* You should be redirected to job dashboard. Select the build number and then select 'Console Output' on the left hand:
-![alt text](./screen-capture/build-output.png "Build Output")
+![alt text](./docs/images/06_build_with_params.png "Start build with parameters")
+* You should be redirected to job dashboard. Click on the dot (ball) next to the build number: 
+![alt text](./docs/images/07_successful_build.png "Successful build")
 * If all is in order the last few lines should look like:
 ```
 [Pipeline] End of Pipeline
@@ -62,8 +68,10 @@ Finished: SUCCESS
 ### Jenkinsfile
 Jenkins pipeline build relies on pre-created file in source repo, ususally it is named Jenkinsfile (name could be customized). It contains Groovy based DSL script. See more details in project's [Jenkinsfile](https://bitbucket.org/vedarn/spring-endpoint-container/src/7e05e60337e3e715f4d7ec65bc91b99a50d4f2f3/Jenkinsfile?at=ned.radev%2Finitial_working_branch).
 
-### Docker and Gradle
-Build delivery is a Docker image containng a JAR file built also in a Docker container. The JAR file is built using one of the official Gradle docker images 'gradle:4.5.1-jdk8-alpine'. It is pulled during build execution. After a successful build of the JAR file it is packed in a new Docker image based on 'openjdk:jre-alpine' (Alpine Linux with JRE).
+### Docker, Gradle and build artifacts
+Build delivery is a Docker image containng a JAR file built also in a Docker container. The JAR file is built using one of the official Gradle docker images 'gradle:4.5.1-jdk8-alpine'. It is pulled during build execution. After a successful build of the JAR file it is packed in a new Docker image based on 'openjdk:jre-alpine' (Alpine Linux with JRE). You could find the JAR in build artifacts:
+
+![alt text](./docs/images/09_build_artifact.png "Build artifact")
 
 ### Starting RESTful Web Service with docker
 * Execute
