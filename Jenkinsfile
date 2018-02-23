@@ -17,7 +17,7 @@ node {
     stage('Build app') {
         /* build docker image as "docker build" from command line */
          // '-v $HOME/gradle-chache/.gradle:/home/gradle/.gradle/'
-        app = docker.build(DOCKER_TAG)
+        app = docker.build($DOCKER_TAG)
     }
 
     stage('Push app to Docker Hub') {
