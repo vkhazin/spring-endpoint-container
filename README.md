@@ -98,7 +98,7 @@ Type `DevTools`, `Web` and `Jersey` in the dependencies field
         }
     }```
 
-17. Change server port in `application.yml` to `8081` because `8080` frequently already in use.
+17. Set server port in `application.yml` to `8081`.
     ```yaml
     server:
         port: 8081
@@ -112,13 +112,25 @@ Type `DevTools`, `Web` and `Jersey` in the dependencies field
 
 1. Check that you have launched an Amazon Linux with a public DNS address and that you have SSH access (see security group) and requests to 80 / 8080 port is opened for this instance.
 
-2. Run bash script from project root dir to install jenkins on AWS linux. Recommend to use. Instead `~/.ssh/id_rsa` put path to your private ssh key.
+2. Run bash script from project root dir to install jenkins on AWS linux. Recommend to use. `ec2-user` - ssh user on AWS. `18.219.230.179` - ip of AWS machine. `~/.ssh/id_rsa` - path to your private ssh key.
     ```bash
-    ssh -i ~/.ssh/id_rsa ec2-user@18.219.230.179 'bash -s' < jenkins-install.sh
+       bash install_aws_jenkins.sh ec2-user 18.219.230.179 ~/.ssh/id_rsa
     ```
 
     Or your can download script from bitbucket
 
     ```bash
-        curl -O https://bitbucket.org/andreichern0v/spring-endpoint-container/raw/d047f436b9895ebc24684ec3b3d2888f1f6c56ab/jenkins-install.sh && chmod 755 jenkins-install.sh && bash jenkins-install.sh && rm jenkins-install.sh
+        curl -O https://bitbucket.org/andreichern0v/spring-endpoint-container/raw/d047f436b9895ebc24684ec3b3d2888f1f6c56ab/install_aws_jenkins.sh && chmod 755 install_aws_jenkins.sh && bash install_aws_jenkins.sh && rm install_aws_jenkins.sh
     ```
+
+## Jenkins Project Setup
+
+1. After login using `"Jenkins public ip"` from setup script, password from line `"Jenkins admin password"` and skiped! all wizard steps you can see Jenkins main page:
+
+![jenkins main page](./doc/images/022.png "Jenkins welcome page")
+
+2. Click  `create new jobs`. Enter project name `spring-endpoint-container` and select `Pipeline`. 
+
+    ![Creating of jenkins job](./doc/images/023.png "Creating of jenkins job")
+
+3. 
