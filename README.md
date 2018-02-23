@@ -61,8 +61,8 @@ ned.radev/initial_working_branch
 ![alt text](./docs/images/04_configure_pipeline.png "Configure Pipeline")
 
 * Select 'Save' button and you should be redirected to project dashboard
-
 * On the left hand select 'Build with parameters' link to trigger a new build
+
 ![alt text](./docs/images/05_no_builds.png "Starting first build")
 
 * New page appears where build requieres input value for parameter ``'GIT_BRANCH'``. Paste following branch and click on Build button:
