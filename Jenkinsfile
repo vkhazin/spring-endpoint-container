@@ -9,10 +9,7 @@ pipeline {
         stage ("Checkout SCM") {
             agent any
             steps {
-                def scmVars = checkout scm
-                def commitHash = scmVars.GIT_COMMIT
-                echo "commitHash: ${commitHash}"
-                
+                checkout scm
             }
         }
 
