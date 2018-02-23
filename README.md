@@ -122,6 +122,22 @@ Type `DevTools`, `Web` and `Jersey` in the dependencies field
     ```bash
         curl -O https://bitbucket.org/andreichern0v/spring-endpoint-container/raw/d047f436b9895ebc24684ec3b3d2888f1f6c56ab/install_aws_jenkins.sh && chmod 755 install_aws_jenkins.sh && bash install_aws_jenkins.sh && rm install_aws_jenkins.sh
     ```
+## Build docker image local
+You can build docker image and run app on local machine using next steps:
+
+1. Build docker image from **initializr** repository branch
+    ```bash
+        docker build -t icssolutions.ca/end-points.io:initializr .
+    ```
+    or from **master** branch
+    ```bash
+        docker build -t icssolutions.ca/end-points.io:master .
+    ```
+2. Run container with app. Spring Boot app is configured to use **8081** port then we need forwarding to this port.
+    ```bash
+        docker run -it -p 8081:8081 icssolutions.ca/end-points.io:initializr
+    ```
+3. Check that endpoint is working. Open browser and open link `http://localhost:8081/helloworld`
 
 ## Jenkins Project Setup
 
@@ -133,7 +149,7 @@ Type `DevTools`, `Web` and `Jersey` in the dependencies field
 
     ![Creating of jenkins job](./doc/images/023.png "Creating of jenkins job")
 
-3. Scroll down to section **Pipeline**. Then 
+3. Scroll down to section **Pipeline**. Then:
     1. Select **Pipeline script from SCM` in dropdwon list (1)
     2. Select **Git** as SCM
     3. Paste into **repository url** url of repository, for example `https://andreichern0v@bitbucket.org/andreichern0v/spring-endpoint-container.git`
@@ -141,3 +157,5 @@ Type `DevTools`, `Web` and `Jersey` in the dependencies field
     5. Check that **Script path** filed contain `Jenkinsfile`.
     6. Click **Save**
     ![Creating of jenkins job](./doc/images/024.png "Creating of jenkins job")
+
+4. 
