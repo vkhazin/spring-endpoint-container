@@ -98,7 +98,7 @@ Type `DevTools`, `Web` and `Jersey` in the dependencies field
         }
     }```
 
-17. Change server port in `application.yml` to `8081` because `8080` frequently already in use.
+17. Set server port in `application.yml` to `8081`.
     ```yaml
     server:
         port: 8081
@@ -112,13 +112,50 @@ Type `DevTools`, `Web` and `Jersey` in the dependencies field
 
 1. Check that you have launched an Amazon Linux with a public DNS address and that you have SSH access (see security group) and requests to 80 / 8080 port is opened for this instance.
 
-2. Run bash script from project root dir to install jenkins on AWS linux. Recommend to use. Instead `~/.ssh/id_rsa` put path to your private ssh key.
+2. Run bash script from project root dir to install jenkins on AWS linux. Recommend to use. `ec2-user` - ssh user on AWS. `18.219.230.179` - ip of AWS machine. `~/.ssh/id_rsa` - path to your private ssh key.
     ```bash
-    ssh -i ~/.ssh/id_rsa ec2-user@18.219.230.179 'bash -s' < jenkins-install.sh
+       bash install_aws_jenkins.sh ec2-user 18.219.230.179 ~/.ssh/id_rsa
     ```
 
     Or your can download script from bitbucket
 
     ```bash
-        curl -O https://bitbucket.org/andreichern0v/spring-endpoint-container/raw/d047f436b9895ebc24684ec3b3d2888f1f6c56ab/jenkins-install.sh && chmod 755 jenkins-install.sh && bash jenkins-install.sh && rm jenkins-install.sh
+        curl -O https://bitbucket.org/andreichern0v/spring-endpoint-container/raw/d047f436b9895ebc24684ec3b3d2888f1f6c56ab/install_aws_jenkins.sh && chmod 755 install_aws_jenkins.sh && bash install_aws_jenkins.sh && rm install_aws_jenkins.sh
     ```
+## Build docker image local
+You can build docker image and run app on local machine using next steps:
+
+1. Build docker image from **initializr** repository branch
+    ```bash
+        docker build -t icssolutions.ca/end-points.io:initializr .
+    ```
+    or from **master** branch
+    ```bash
+        docker build -t icssolutions.ca/end-points.io:master .
+    ```
+2. Run container with app. Spring Boot app is configured to use **8081** port then we need forwarding to this port.
+    ```bash
+        docker run -it -p 8081:8081 icssolutions.ca/end-points.io:initializr
+    ```
+3. Check that endpoint is working. Open browser and open link `http://localhost:8081/helloworld`
+
+## Jenkins Project Setup
+
+1. After login using `"Jenkins public ip"` from setup script, password from line `"Jenkins admin password"` and skiped! all wizard steps you can see Jenkins main page:
+
+![jenkins main page](./doc/images/022.png "Jenkins welcome page")
+
+2. Click  **create new jobs**. Enter project name `spring-endpoint-container`, select **Pipeline** and click **ok**.
+
+    ![Creating of jenkins job](./doc/images/023.png "Creating of jenkins job")
+
+3. Scroll down to section **Pipeline**. Then:
+    1. Select **Pipeline script from SCM` in dropdwon list (1)
+    2. Select **Git** as SCM
+    3. Paste into **repository url** url of repository, for example `https://andreichern0v@bitbucket.org/andreichern0v/spring-endpoint-container.git`
+    4. Paste into field **Branch specifier** repository branch, for example `refs/heads/feature/initializr`
+    5. Check that **Script path** filed contain `Jenkinsfile`.
+    6. Click **Save**
+    ![Creating of jenkins job](./doc/images/024.png "Creating of jenkins job")
+
+4. 

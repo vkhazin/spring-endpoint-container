@@ -30,8 +30,8 @@ sudo service docker start
 
 # Add access rights
 sudo groupadd docker
-usermod -a -G docker ec2-user # for ssh connecting
-usermod -a -G docker jenkins
+sudo usermod -a -G docker ec2-user # for ssh connecting
+sudo usermod -a -G docker jenkins
 sudo service docker restart
 
 # Turn on to automatically Docker starting when instance is started
