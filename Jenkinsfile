@@ -9,11 +9,12 @@ pipeline {
         stage('Build Api Inside Docker') {
             agent {
                 docker { 
-                    image 'frekele/gradle:4.3.1-jdk8' 
+                    image 'frekele/gradle:4.3.1-jdk8'
+                    args '-v ~/gradle-chache/.gradle:/home/gradle/.gradle/'
                 }
-                args '-v ~/gradle-chache/.gradle:/home/gradle/.gradle/'
             }
             steps {
+                sh 'whoami'
                 sh 'ls -a'
                 sh 'gradle build -x test'
                 sh 'ls -a'
