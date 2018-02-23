@@ -2,6 +2,7 @@
 
 ### Overview
 This is proof of concept project showing implementation of CI/CD enviromnet for building a RESTful Web Service with [Spring Framework](https://en.wikipedia.org/wiki/Spring_Framework). The project uses following components to automate build process:
+
 * [Jenkins](https://en.wikipedia.org/wiki/Jenkins_%28software%29)
 * [Docker](https://en.wikipedia.org/wiki/Docker_%28software%29)
 * [Gradle](https://en.wikipedia.org/wiki/Gradle)
