@@ -26,22 +26,30 @@ sh jenkins/setup_jenkins_ami_linux.sh
 * After installation login using https://public-ip-address with password listed at the end of setup script
 * You can skip start-up window, all of the needed plugins are installed already
 
-#### Why NginX?
+### Why NginX?
 * Jenkins is not as easy to configure to use encryption: https://wiki.jenkins-ci.org/display/JENKINS/Starting+and+Accessing+Jenkins
 * NginX reverse proxy is somewhat easier to setup and to encrypt traffic to Jenkins
 * See [nginx.sh](https://bitbucket.org/vedarn/spring-endpoint-container/src/7e05e60337e3e715f4d7ec65bc91b99a50d4f2f3/jenkins/nginx.sh?at=ned.radev%2Finitial_working_branch) for details
 
 ### Project Setup
 * After skipping the setup wizard an empty dashboard is presented:
+
 ![alt text](./docs/images/01_no_projects.png "Empty Jenkins Dashboard")
+
 * Select 'create new jobs' link
 * Enter project name and select 'Pipeline':
+
 ![alt text](./docs/images/02_new_item.png "New Pipeline")
+
 * Select 'Ok' to continue
 * On the projecs configuration page in 'General' section click on 'This project is parameterized'. Add new String parameter.
+
 ![alt text](./docs/images/03_configure_parameter_1.png "New String parameter")
+
 * Name the parameter ``'GIT_BRANCH'`` and set default value to 'master'.
+
 ![alt text](./docs/images/03_configure_parameter_2.png "New String parameter")
+
 * Scroll down to 'Pipeline' and from 'Definition' drop-down list select 'Pipeline script from SCM' option.
 * From newly-appeared drop-down list 'SCM' select 'Git' option
 * Paste repository URL in 'Repository URL' text box: https://bitbucket.org/vedarn/spring-endpoint-container.git and configure credentials if applicable
@@ -49,17 +57,25 @@ sh jenkins/setup_jenkins_ami_linux.sh
 ```
 ned.radev/initial_working_branch
 ```
+
 ![alt text](./docs/images/04_configure_pipeline.png "Configure Pipeline")
+
 * Select 'Save' button and you should be redirected to project dashboard
+
 * On the left hand select 'Build with parameters' link to trigger a new build
 ![alt text](./docs/images/05_no_builds.png "Starting first build")
+
 * New page appears where build requieres input value for parameter ``'GIT_BRANCH'``. Paste following branch and click on Build button:
 ```
 ned.radev/initial_working_branch
 ```
+
 ![alt text](./docs/images/06_build_with_params.png "Start build with parameters")
+
 * You should be redirected to job dashboard. Click on the dot (ball) next to the build number: 
+
 ![alt text](./docs/images/07_successful_build.png "Successful build")
+
 * You are redirected to build console output.
 * If all is in order the last few lines should look like:
 ```
