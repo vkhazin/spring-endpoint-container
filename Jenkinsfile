@@ -1,4 +1,5 @@
-DOCKER_TAG = "vkhazin:spring-endpoint-container"
+// DOCKER_TAG = "vkhazin:spring-endpoint-container"
+DOCKER_TAG = "andreichernov:spring-endpoint-container"
 MAINTAINER = "vladimir.khazin@icssolutions.ca"
 DOCKER_REGISTRY = "https://registry.hub.docker.com"
 
