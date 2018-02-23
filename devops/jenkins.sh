@@ -23,38 +23,6 @@ sudo yum install git -y
 echo "install jenkins"
 sudo yum install jenkins -y
 
-# Install nginx as proxy
-echo "install nginx"
-sudo yum install nginx -y
-
-echo "set nginx config"
-sudo truncate -s 0 /etc/nginx/nginx.conf
-echo "worker_processes  1;
-events {
-    worker_connections  1024;
-}
-http {
-    include       mime.types;
-    default_type  application/octet-stream;
-
-    sendfile        on;
-    keepalive_timeout  65;
-    server {
-        listen 80;
-        server_name _;
-        location / {
-            proxy_pass http://127.0.0.1:8080;
-        }
-    }
-}" | sudo tee /etc/nginx/nginx.conf
-
-# Turn on to automatically nginx starting when instance is started
-sudo chkconfig nginx on
-
-# Start nginx
-sudo service nginx start
-sudo sleep 5  # Waits 5 seconds.
-
 # Install docker
 echo "install docker"
 sudo yum install docker -y
@@ -76,8 +44,8 @@ sudo sleep 5  # Waits 5 seconds.
 sudo chkconfig jenkins on
 
 # Check that jenkins is up
-echo "Jenkins public ip = http://$(curl ifconfig.co -s)"
-echo "Jenkins public dns =  $(curl -s http://169.254.169.254/latest/meta-data/public-hostname)"
+echo "Jenkins via public ip = https://$(curl ifconfig.co -s)"
+echo "Jenkins via public dns =  https://$(curl -s http://169.254.169.254/latest/meta-data/public-hostname)"
 echo "Jenkins admin password: $(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)"
 
 
