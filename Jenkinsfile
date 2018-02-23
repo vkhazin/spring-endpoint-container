@@ -25,10 +25,10 @@ node {
          * 2) the 'latest' tag
          * its easy becasuse all  layers will be reused */
         sh "docker images -a"
-        // docker.withRegistry(DOCKER_REGISTRY, 'docker-registry-credentials') {
-        //     app.push("${params.GIT_BRANCH}")
-        //     app.push("latest")
-        // }
+        docker.withRegistry(DOCKER_REGISTRY, 'docker-registry-credentials') {
+            app.push("${params.GIT_BRANCH}")
+            app.push("latest")
+        }
     }
 
     // post {
