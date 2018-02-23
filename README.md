@@ -113,28 +113,28 @@ Type `DevTools`, `Web` and `Jersey` in the dependencies field
 1. Check that you have launched an Amazon Linux with a public DNS address and that you have SSH access (see security group) and requests to 80 / 8080 port is opened for this instance.
 
 2. Run bash script from project root dir to install jenkins on AWS linux. Recommend to use. `ec2-user` - ssh user on AWS. `18.219.230.179` - ip of AWS machine. `~/.ssh/id_rsa` - path to your private ssh key.
-    ```bash
+    ```
        bash install_aws_jenkins.sh ec2-user 18.219.230.179 ~/.ssh/id_rsa
     ```
 
     Or your can download script from bitbucket
 
-    ```bash
+    ```
         curl -O https://bitbucket.org/andreichern0v/spring-endpoint-container/raw/d047f436b9895ebc24684ec3b3d2888f1f6c56ab/install_aws_jenkins.sh && chmod 755 install_aws_jenkins.sh && bash install_aws_jenkins.sh && rm install_aws_jenkins.sh
     ```
 ## Build docker image local
 You can build docker image and run app on local machine using next steps:
 
 1. Build docker image from **initializr** repository branch
-    ```bash
+    ```
         docker build -t icssolutions.ca/end-points.io:initializr .
     ```
     or from **master** branch
-    ```bash
+    ```
         docker build -t icssolutions.ca/end-points.io:master .
     ```
 2. Run container with app. Spring Boot app is configured to use **8081** port then we need forwarding to this port.
-    ```bash
+    ```
         docker run -it -p 8081:8081 icssolutions.ca/end-points.io:initializr
     ```
 3. Check that endpoint is working. Open browser and open link `http://localhost:8081/helloworld`
