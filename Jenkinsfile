@@ -1,5 +1,5 @@
-// DOCKER_TAG = "vkhazin:spring-endpoint-container"
-DOCKER_TAG = "andreichernov:spring-endpoint-container"
+// DOCKER_TAG = "vkhazin/spring-endpoint-container"
+DOCKER_TAG = "andreichernov/spring-endpoint-container"
 MAINTAINER = "vladimir.khazin@icssolutions.ca"
 DOCKER_REGISTRY = "https://registry.hub.docker.com"
 
@@ -25,11 +25,16 @@ node {
          * 1) repository branch name as tag
          * 2) the 'latest' tag
          * its easy becasuse all  layers will be reused */
-        sh "docker images -a"
-        docker.withRegistry(DOCKER_REGISTRY, 'docker-registry-credentials') {
-            app.push("${params.GIT_BRANCH}")
-            app.push("latest")
+        // docker.withRegistry(DOCKER_REGISTRY, 'docker-registry-credentials') {
+        //     app.push("${params.GIT_BRANCH}")
+        //     app.push("latest")
+        // }
+        withCredentials([usernamePassword(credentialsId: 'docker-registry-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']) {
+          sh "docker login -u ${env.usernameVariable} -p ${env.passwordVariable}"
+          sh "docker push ${DOCKER_TAG}:${params.GIT_BRANCH}"
+          sh "docker push ${DOCKER_TAG}:latest"
         }
+        
     }
 
     // post {
