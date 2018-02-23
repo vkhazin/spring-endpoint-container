@@ -40,6 +40,6 @@ node {
 //            }
 	}
         // archive the jar
-        archiveArtifacts allowEmptyArchive: true, artifacts: 'app.jar'
+        archiveArtifacts allowEmptyArchive: true, artifacts: 'docker/exec/app.jar'
     }
 } 
