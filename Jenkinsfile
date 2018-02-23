@@ -29,7 +29,7 @@ node {
         //     app.push("${params.GIT_BRANCH}")
         //     app.push("latest")
         // }
-        withCredentials([usernamePassword(credentialsId: 'docker-registry-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']) {
+        withCredentials([usernamePassword(credentialsId: 'docker-registry-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
           sh "docker login -u ${env.usernameVariable} -p ${env.passwordVariable}"
           sh "docker push ${DOCKER_TAG}:${params.GIT_BRANCH}"
           sh "docker push ${DOCKER_TAG}:latest"
