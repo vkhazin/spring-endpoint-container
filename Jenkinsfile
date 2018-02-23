@@ -1,13 +1,12 @@
+DOCKER_TAG = "vkhazin:spring-endpoint-container"
+MAINTAINER = "vladimir.khazin@icssolutions.ca"
+DOCKER_REGISTRY = "https://registry.hub.docker.com"
+
 node {
     def app
     parameters {
         string(name: 'GIT_BRANCH', defaultValue: 'master', description: 'Which branch should use to work')
         string(name: 'REPOSITORY_URL', defaultValue: 'git@bitbucket.org:vk-smith/spring-endpoint-container.git', description: '')
-    }
-    environment {
-        DOCKER_TAG = "vkhazin:spring-endpoint-container"
-        MAINTAINER = "vladimir.khazin@icssolutions.ca"
-        DOCKER_REGISTRY = "https://registry.hub.docker.com"
     }
 
     stage('Clone repository') {
@@ -17,7 +16,7 @@ node {
     stage('Build app') {
         /* build docker image as "docker build" from command line */
          // '-v $HOME/gradle-chache/.gradle:/home/gradle/.gradle/'
-        app = docker.build(env.DOCKER_TAG)
+        app = docker.build(DOCKER_TAG)
     }
 
     stage('Push app to Docker Hub') {
@@ -26,8 +25,8 @@ node {
          * 2) the 'latest' tag
          * its easy becasuse all  layers will be reused */
         sh "docker images -a"
-        // docker.withRegistry(env.DOCKER_REGISTRY, 'docker-registry-credentials') {
-        //     app.push(${params.GIT_BRANCH})
+        // docker.withRegistry(DOCKER_REGISTRY, 'docker-registry-credentials') {
+        //     app.push("${params.GIT_BRANCH}")
         //     app.push("latest")
         // }
     }
