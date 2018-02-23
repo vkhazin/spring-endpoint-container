@@ -9,15 +9,9 @@ pipeline {
         stage ("Checkout SCM") {
             agent any
             steps {
-                checkout scm
-                script {
-                    projectName = git.getGitRepositoryName()
-                    githubOrg = git.getGitOrgName()
-                    gitCommit = manifest.getGitCommit()
-                }
-                echo "projectName: ${env.projectName}"
-                echo "githubOrg: ${env.githubOrg}"
-                echo "gitCommit: ${env.gitCommit}"
+                def scmVars = checkout scm
+                def commitHash = scmVars.GIT_COMMIT
+                echo "commitHash: ${commitHash}"
                 
             }
         }
