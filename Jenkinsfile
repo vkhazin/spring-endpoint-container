@@ -17,7 +17,7 @@ node {
     stage('Build app') {
         /* build docker image as "docker build" from command line */
          // '-v $HOME/gradle-chache/.gradle:/home/gradle/.gradle/'
-        app = docker.build($DOCKER_TAG)
+        app = docker.build("${DOCKER_TAG}"")
     }
 
     stage('Push app to Docker Hub') {
@@ -26,7 +26,7 @@ node {
          * 2) the 'latest' tag
          * its easy becasuse all  layers will be reused */
         sh "docker images -a"
-        // docker.withRegistry(${DOCKER_REGISTRY}, 'docker-registry-credentials') {
+        // docker.withRegistry("${DOCKER_REGISTRY}", 'docker-registry-credentials') {
         //     app.push(${params.GIT_BRANCH})
         //     app.push("latest")
         // }
