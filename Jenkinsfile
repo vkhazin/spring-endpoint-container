@@ -25,7 +25,12 @@ node {
          * 1) repository branch name as tag
          * 2) the 'latest' tag
          * its easy becasuse all  layers will be reused */
-        def lastBranchePart = "${params.GIT_BRANCH}".tokenize('/').last()
+        echo "params.GIT_BRANCH :" + params.GIT_BRANCH;
+        def brancheParts = "${params.GIT_BRANCH}".tokenize('/')
+        echo "brancheParts :" + brancheParts;
+        
+        def lastBranchePart = brancheParts.last()
+        echo "lastBranchePart :" + lastBranchePart;
         docker.withRegistry(DOCKER_REGISTRY, 'docker-registry-credentials') {
             app.push(lastBranchePart)
             app.push("latest")
