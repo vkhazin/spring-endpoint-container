@@ -27,8 +27,8 @@ node {
          * 1) repository branch name as tag
          * 2) the 'latest' tag
          * its easy becasuse all  layers will be reused */
-        println "params.GIT_BRANCH :" +  ${PARAMETER_NAME};
-        def brancheParts = "${params.GIT_BRANCH}".tokenize('/')
+        println "params.GIT_BRANCH :" +  params.GIT_BRANCH;
+        def brancheParts = params.GIT_BRANCH.tokenize('/')
         println "brancheParts :" + brancheParts;
         
         def lastBranchePart = brancheParts.last()
