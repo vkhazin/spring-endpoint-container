@@ -3,11 +3,15 @@ DOCKER_TAG = "andreichernov/spring-endpoint-container"
 MAINTAINER = "vladimir.khazin@icssolutions.ca"
 DOCKER_REGISTRY = "https://registry.hub.docker.com"
 
-node {
-    parameters {
+properties([
+    parameters([
         string(name: 'GIT_BRANCH', defaultValue: 'master', description: 'Which branch should use to work')
         string(name: 'REPOSITORY_URL', defaultValue: 'git@bitbucket.org:vk-smith/spring-endpoint-container.git', description: '')
-    }
+    ])
+])
+
+node {
+    
     def app
     
     stage('Clone repository') {
