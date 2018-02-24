@@ -2,7 +2,7 @@
 DOCKER_TAG = "andreichernov/spring-endpoint-container"
 MAINTAINER = "vladimir.khazin@icssolutions.ca"
 DOCKER_REGISTRY = "https://registry.hub.docker.com"
-// GIT_BRANCH = "feature/initializr"
+GIT_BRANCH = ""
 // REPOSITORY_URL = "https://andreichern0v@bitbucket.org/andreichern0v/spring-endpoint-container.git"
 
 node {
@@ -10,8 +10,8 @@ node {
     
     stage('Clone repository') {
         checkout scm
-        def branchName = scm.branches[0].name
-        println "branchName = ${branchName}"
+        GIT_BRANCH = scm.branches[0].name
+        println "branchName = ${GIT_BRANCH}"
     }
 
     stage('Build app') {
@@ -26,7 +26,7 @@ node {
          * 2) the 'latest' tag
          * its easy becasuse all  layers will be reused */
         // https://groups.google.com/forum/#!topic/jenkinsci-users/a-9YSVVU5Bw
-        def brancheParts = branchName.tokenize('/')
+        def brancheParts = GIT_BRANCH.tokenize('/')
         def lastBranchePart = brancheParts.last()
         docker.withRegistry(DOCKER_REGISTRY, 'docker-registry-credentials') {
             app.push(lastBranchePart)
