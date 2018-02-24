@@ -155,7 +155,7 @@ You can build docker image and run app on local machine using next steps:
     1. Select **Pipeline script from SCM` in dropdwon list (1)
     2. Select **Git** as SCM
     3. Paste into **repository url** url of repository, for example `https://andreichern0v@bitbucket.org/andreichern0v/spring-endpoint-container.git`
-    4. Paste into field **Branch specifier** repository branch, for example `refs/heads/feature/initializr`
+    4. Paste into field **Branch specifier** repository branch, for example `*/feature/initializr`
     5. Check that **Script path** filed contain `Jenkinsfile`.
     6. Click **Save**
     ![Creating of jenkins job](./doc/images/024.png "Creating of jenkins job")

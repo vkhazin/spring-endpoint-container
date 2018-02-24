@@ -1,9 +1,7 @@
 // DOCKER_TAG = "vkhazin/spring-endpoint-container"
 DOCKER_TAG = "andreichernov/spring-endpoint-container"
-MAINTAINER = "vladimir.khazin@icssolutions.ca"
 DOCKER_REGISTRY = "https://registry.hub.docker.com"
 GIT_BRANCH = ""
-// REPOSITORY_URL = "https://andreichern0v@bitbucket.org/andreichern0v/spring-endpoint-container.git"
 
 node {
     def app
@@ -14,18 +12,15 @@ node {
         println "branchName = ${GIT_BRANCH}"
     }
 
-    stage('Build app') {
-        /* build docker image as "docker build" from command line */
-         // '-v $HOME/gradle-chache/.gradle:/home/gradle/.gradle/'
+    stage('Build app as docker image') {
+        // docker.build - same as "docker build" from command line
+        // '-v $HOME/gradle-chache/.gradle:/home/gradle/.gradle/'
         app = docker.build(DOCKER_TAG)
     }
 
     stage('Push app to Docker Hub') {
-        /* push the image with two tags:
-         * 1) repository branch name as tag
-         * 2) the 'latest' tag
-         * its easy becasuse all  layers will be reused */
-        // https://groups.google.com/forum/#!topic/jenkinsci-users/a-9YSVVU5Bw
+        /* push the image with two tags: 1) repository branch name as tag; 2) the 'latest' tag
+         * its not require additional space becasuse all layers are same */
         def brancheParts = GIT_BRANCH.tokenize('/')
         def lastBranchePart = brancheParts.last()
         docker.withRegistry(DOCKER_REGISTRY, 'docker-registry-credentials') {

@@ -52,3 +52,8 @@ done
 
 # Add access rights to jenkins to docker using
 sudo service jenkins restart
+
+# Check that jenkins is up
+echo "Jenkins via public ip = https://$(curl ifconfig.co -s)"
+echo "Jenkins via public dns =  https://$(curl -s http://169.254.169.254/latest/meta-data/public-hostname)"
+echo "Jenkins admin password: $(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)"
