@@ -3,12 +3,14 @@ DOCKER_TAG = "andreichernov/spring-endpoint-container"
 MAINTAINER = "vladimir.khazin@icssolutions.ca"
 DOCKER_REGISTRY = "https://registry.hub.docker.com"
 
-node {
-    def app
-    parameters {
+parameters {
         string(name: 'GIT_BRANCH', defaultValue: 'master', description: 'Which branch should use to work')
         string(name: 'REPOSITORY_URL', defaultValue: 'git@bitbucket.org:vk-smith/spring-endpoint-container.git', description: '')
     }
+
+node {
+    def app
+    
 
     stage('Clone repository') {
         checkout scm
@@ -26,7 +28,7 @@ node {
          * 2) the 'latest' tag
          * its easy becasuse all  layers will be reused */
         echo "params.GIT_BRANCH :" + params.GIT_BRANCH;
-        def brancheParts = "${GIT_BRANCH}".tokenize('/')
+        def brancheParts = "${params.GIT_BRANCH}".tokenize('/')
         echo "brancheParts :" + brancheParts;
         
         def lastBranchePart = brancheParts.last()
