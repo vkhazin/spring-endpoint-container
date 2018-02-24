@@ -50,6 +50,26 @@ do {
 }
 done
 
+# We need add  some preapproved script to scriptApproval.xml file in jenkins root dir `/var/lib/jenkins` by deafult
+verstionStr=$(sed -n '3,1p' pom.properties)
+version=$(echo ${verstionStr:8})
+
+SCRIPT_APPROVAL_FILE="
+<?xml version='1.1' encoding='UTF-8'?>
+<scriptApproval plugin="script-security@${version}">
+  <approvedScriptHashes/>
+  <approvedSignatures>
+    <string>method hudson.plugins.git.BranchSpec getName</string>
+    <string>method hudson.plugins.git.GitSCM getBranches</string>
+  </approvedSignatures>
+  <aclApprovedSignatures/>
+  <approvedClasspathEntries/>
+  <pendingScripts/>
+  <pendingSignatures/>
+  <pendingClasspathEntries/>
+"
+echo "$SCRIPT_APPROVAL_FILE" | sudo tee /var/lib/jenkins/scriptApproval.xml
+
 # Add access rights to jenkins to docker using
 sudo service jenkins restart
 
