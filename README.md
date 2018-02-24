@@ -15,7 +15,7 @@ TODO:
 2. Select `java`, `gradle` and select version `1.5.10`. Enter `group` field and `artifact` field. 
 Type `DevTools`, `Web` and `Jersey` in the dependencies field
 
-    ![init project on spring.io](./doc/images/004.png "init project on spring.io")
+    <img src="./doc/images/004.png" width="1024">
 
 3. Click on `generate project` and download to your dev folder.
 
@@ -23,51 +23,51 @@ Type `DevTools`, `Web` and `Jersey` in the dependencies field
 
 5. Open project in the Intellij IDEA
 
-    ![open project in idea 1](./doc/images/005.png "Intellij Idea")
+    <img src="./doc/images/005.png" width="1024">
 
-    ![open project in idea 2](./doc/images/006.png "Intellij Idea")
+    <img src="./doc/images/006.png" width="1024">
 
 6. Click on `import gradle project`
 
-    ![import gradle](./doc/images/007.png "Import Gradle project")
+    <img src="./doc/images/007.png" width="1024">
 
 7. All by default here exclude Gradle jvm field. Select your jdk.
 
-    ![default setting](./doc/images/008_select_sdk.png "Default Gradle settings")
+    <img src="./doc/images/008.png" width="1024">
 
 8. If all previous step was ok then you see next screen
 
-    ![first open of project](./doc/images/010.png "First open of project")
+    <img src="./doc/images/010.png" width="1024">
 
 9. On this step git not init also. You can do it using menu `VCS` -> `Enable Version Control Integration`. Then select git (if git not exist in menu you need install git to your system. Ubuntu Example `sudo apt-get install git`)
 
-    ![enable git with project](./doc/images/011.png "Enable git")
+    <img src="./doc/images/011.png" width="1024">
 
 10. Right click on `application.properties` file and select `refactor` -> `rename`. Rename it to `application.yml`
 
-    ![simplify of props file](./doc/images/012.png "Rename .properties to .yml")
+    <img src="./doc/images/012.png" width="1024">
 
 11. On this step you can run you app because IDEA already detect that there is Spring App
 
-    ![attempt to first run](./doc/images/013.png "Attempt to first run")
+    <img src="./doc/images/013.png" width="1024">
 
 12. App is started on 8080 port by default. Stop app after this check.
 
-    ![app is started](./doc/images/014.png "App is started")
+    <img src="./doc/images/014.png" width="1024">
 
 13. To add endpoint we should create package `controller`. Right click on base package and select `new`->`package`. Enter `controller` to input field.
 
-    ![create controller package](./doc/images/015.png "Controller package creating 01")
+    <img src="./doc/images/015.png" width="1024">
 
 14. Then click on this package and select `new`-> `class`. Type `HelloWorldController` to input field.
 
-    ![create controller class 01](./doc/images/016.png "Controller class creating 01")
+    <img src="./doc/images/016.png" width="1024">
 
-    ![create controller class 02](./doc/images/017.png "Controller class creating 02")
+    <img src="./doc/images/017.png" width="1024">
 
 15. Add annotation `@RestController` to this class
 
-    ![annotation @RestController](./doc/images/018.png "Rest controller annotation")
+    <img src="./doc/images/018.png" width="1024">
 
 16. Add method `getHelloWorld()` and create response class `HelloWorldResponse`
     ```java
@@ -106,7 +106,7 @@ Type `DevTools`, `Web` and `Jersey` in the dependencies field
 
 18. Now we can run app and check that endpoint is works.
 
-    ![Get Request to endpoint](./doc/images/020.png "Hello World endpoint is works now as in requiirement.")
+    <img src="./doc/images/020.png" width="1024">
 
 ## Create a script to setup up Jenkins server on Amazon Linux AMI 2017.09
 
@@ -145,11 +145,11 @@ You can build docker image and run app on local machine using next steps:
 
 1. After login using `"Jenkins public ip"` from setup script, password from line `"Jenkins admin password"` and skiped! all wizard steps you can see Jenkins main page:
 
-![jenkins main page](./doc/images/022.png "Jenkins welcome page")
+    <img src="./doc/images/022.png" width="1024">
 
 2. Click  **create new jobs**. Enter project name `spring-endpoint-container`, select **Pipeline** and click **ok**.
 
-    ![Creating of jenkins job](./doc/images/023.png "Creating of jenkins job")
+    <img src="./doc/images/023.png" width="1024">
 
 3. Scroll down to section **Pipeline**. Then:
     1. Select **Pipeline script from SCM` in dropdwon list (1)
@@ -158,6 +158,7 @@ You can build docker image and run app on local machine using next steps:
     4. Paste into field **Branch specifier** repository branch, for example `*/feature/initializr`
     5. Check that **Script path** filed contain `Jenkinsfile`.
     6. Click **Save**
-    ![Creating of jenkins job](./doc/images/024.png "Creating of jenkins job")
 
-4. 
+    <img src="./doc/images/024.png" width="1024">
+
+4. kkkkkkkk
