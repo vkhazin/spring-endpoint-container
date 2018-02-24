@@ -26,7 +26,7 @@ node {
          * 2) the 'latest' tag
          * its easy becasuse all  layers will be reused */
         echo "params.GIT_BRANCH :" + params.GIT_BRANCH;
-        def brancheParts = "${params.GIT_BRANCH}".tokenize('/')
+        def brancheParts = "${GIT_BRANCH}".tokenize('/')
         echo "brancheParts :" + brancheParts;
         
         def lastBranchePart = brancheParts.last()
