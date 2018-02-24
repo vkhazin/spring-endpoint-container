@@ -30,12 +30,8 @@ node {
          * 2) the 'latest' tag
          * its easy becasuse all  layers will be reused */
         // https://groups.google.com/forum/#!topic/jenkinsci-users/a-9YSVVU5Bw
-        println "GIT_BRANCH :" +  "${GIT_BRANCH}";
         def brancheParts = "${GIT_BRANCH}".tokenize('/')
-        println "brancheParts :" + brancheParts;
-        
         def lastBranchePart = brancheParts.last()
-        printlb "lastBranchePart :" + lastBranchePart;
         docker.withRegistry(DOCKER_REGISTRY, 'docker-registry-credentials') {
             app.push(lastBranchePart)
             app.push("latest")
