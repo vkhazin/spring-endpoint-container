@@ -15,7 +15,7 @@ TODO:
 2. Select `java`, `gradle` and select version `1.5.10`. Enter `group` field and `artifact` field. 
 Type `DevTools`, `Web` and `Jersey` in the dependencies field
 
-    <img src="./doc/images/004.png" width="1024">
+    ![init project on spring.io](./doc/images/004.png "init project on spring.io")
 
 3. Click on `generate project` and download to your dev folder.
 
@@ -23,51 +23,51 @@ Type `DevTools`, `Web` and `Jersey` in the dependencies field
 
 5. Open project in the Intellij IDEA
 
-    <img src="./doc/images/005.png" width="1024">
+    ![open project in idea 1](./doc/images/005.png "Intellij Idea")
 
-    <img src="./doc/images/006.png" width="1024">
+    ![open project in idea 2](./doc/images/006.png "Intellij Idea")
 
 6. Click on `import gradle project`
 
-    <img src="./doc/images/007.png" width="1024">
+    ![import gradle](./doc/images/007.png "Import Gradle project")
 
 7. All by default here exclude Gradle jvm field. Select your jdk.
 
-    <img src="./doc/images/008.png" width="1024">
+    ![default setting](./doc/images/008.png "Default Gradle settings")
 
 8. If all previous step was ok then you see next screen
 
-    <img src="./doc/images/010.png" width="1024">
+    ![first open of project](./doc/images/010.png "First open of project")
 
 9. On this step git not init also. You can do it using menu `VCS` -> `Enable Version Control Integration`. Then select git (if git not exist in menu you need install git to your system. Ubuntu Example `sudo apt-get install git`)
 
-    <img src="./doc/images/011.png" width="1024">
+    ![enable git with project](./doc/images/011.png "Enable git")
 
 10. Right click on `application.properties` file and select `refactor` -> `rename`. Rename it to `application.yml`
 
-    <img src="./doc/images/012.png" width="1024">
+    ![simplify of props file](./doc/images/012.png "Rename .properties to .yml")
 
 11. On this step you can run you app because IDEA already detect that there is Spring App
 
-    <img src="./doc/images/013.png" width="1024">
+    ![attempt to first run](./doc/images/013.png "Attempt to first run")
 
 12. App is started on 8080 port by default. Stop app after this check.
 
-    <img src="./doc/images/014.png" width="1024">
+    ![app is started](./doc/images/014.png "App is started")
 
 13. To add endpoint we should create package `controller`. Right click on base package and select `new`->`package`. Enter `controller` to input field.
 
-    <img src="./doc/images/015.png" width="1024">
+    ![create controller package](./doc/images/015.png "Controller package creating 01")
 
 14. Then click on this package and select `new`-> `class`. Type `HelloWorldController` to input field.
 
-    <img src="./doc/images/016.png" width="1024">
+    ![create controller class 01](./doc/images/016.png "Controller class creating 01")
 
-    <img src="./doc/images/017.png" width="1024">
+    ![create controller class 02](./doc/images/017.png "Controller class creating 02")
 
 15. Add annotation `@RestController` to this class
 
-    <img src="./doc/images/018.png" width="1024">
+    ![annotation @RestController](./doc/images/018.png "Rest controller annotation")
 
 16. Add method `getHelloWorld()` and create response class `HelloWorldResponse`
     ```java
@@ -106,7 +106,7 @@ Type `DevTools`, `Web` and `Jersey` in the dependencies field
 
 18. Now we can run app and check that endpoint is works.
 
-    <img src="./doc/images/020.png" width="1024">
+    ![Get Request to endpoint](./doc/images/020.png "Hello World endpoint is works now as in requiirement.")
 
 ## Create a script to setup up Jenkins server on Amazon Linux AMI 2017.09
 
@@ -145,20 +145,100 @@ You can build docker image and run app on local machine using next steps:
 
 1. After login using `"Jenkins public ip"` from setup script, password from line `"Jenkins admin password"` and skiped! all wizard steps you can see Jenkins main page:
 
-    <img src="./doc/images/022.png" width="1024">
+    ![jenkins main page](./doc/images/022.png "Jenkins welcome page")
 
 2. Click  **create new jobs**. Enter project name `spring-endpoint-container`, select **Pipeline** and click **ok**.
 
-    <img src="./doc/images/023.png" width="1024">
+    ![Creating of jenkins job](./doc/images/023.png "Creating of jenkins job")
 
 3. Scroll down to section **Pipeline**. Then:
-    1. Select **Pipeline script from SCM` in dropdwon list (1)
+    1. Select **Pipeline script from SCM** in dropdwon list (1)
     2. Select **Git** as SCM
     3. Paste into **repository url** url of repository, for example `https://andreichern0v@bitbucket.org/andreichern0v/spring-endpoint-container.git`
     4. Paste into field **Branch specifier** repository branch, for example `*/feature/initializr`
-    5. Check that **Script path** filed contain `Jenkinsfile`.
+    5. Check that **Script path** filed contains `Jenkinsfile`.
     6. Click **Save**
 
-    <img src="./doc/images/024.png" width="1024">
+    ![Creating of jenkins job](./doc/images/024.png "Creating of jenkins job")
 
-4. kkkkkkkk
+4. Dont clik **Build Now**. Because we need to provide DockerHub credentials
+    1. Click **Credentials** in the left menu
+
+        ![Credentials click](./doc/images/025.png "Go to credentials menu")
+    
+    2. Click on **global** link
+
+        ![Link to global cred](./doc/images/026.png "Link to global cred")
+    
+    3. Click **Add Credentials**
+
+        ![Add credentials](./doc/images/027.png "Add credentials")
+    
+    4. Fill next fields with your username on DockerHub and password. Paste to field **ID** this id `docker-registry-credentials`
+
+        ![DockerHub credentials](./doc/images/028.png "DockerHub credentials")
+    
+    5. Click **Ok**
+
+5. Now open Jenkins main page.
+
+    ![Go to mainpage](./doc/images/029.png "Jenkins mainpage")
+
+6. Click on project **spring-endpoint-container**.
+
+    ![Go to project](./doc/images/030.png "Project page")
+
+7. Click **Build Now** in left menu
+
+    ![Build now](./doc/images/031.png "Build now")
+
+8. Wait
+    
+    ![Waiting](./doc/images/032.png "waiting")
+
+9. Build success indicators
+
+    ![Success](./doc/images/033.png "Success")
+
+10. Check DockerHub account
+
+    ![Success](./doc/images/034.png "Success")
+
+11. Lets take our app from DockerHub
+
+    ```
+        docker pull andreichernov/spring-endpoint-container:latest
+    ```
+
+12. Run it. Look that we set port forwarding to app port 8081.
+
+    ```
+        docker run -it -p 8081:8081 andreichernov/spring-endpoint-container:latest
+    ```
+
+    ![Spring App Running](./doc/images/035.png "Spring App Running")
+
+    ![Spring App Running](./doc/images/036.png "Spring App Running")
+
+13. Open your browser and paste next address
+
+    ```
+        http://127.0.0.1:8081/helloworld
+    ```
+    `helloworld` here is our endpoint
+
+    ![Open browser](./doc/images/037.png "Open browser")
+
+    Congratulations if everything works successfully!
+
+14. If build was fail. Click on build number in left panel
+
+    ![If build fail](./doc/images/038.png "If build fail")
+
+15. Click on **Console output**
+
+    ![Go to build](./doc/images/039.png "Go to build")
+
+16. Read log file and try to clarify whats happen. In my example case its wrong credentials
+
+    ![Go to build](./doc/images/040.png "Go to build")
