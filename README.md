@@ -33,7 +33,7 @@ Type `DevTools`, `Web` and `Jersey` in the dependencies field
 
 7. All by default here exclude Gradle jvm field. Select your jdk.
 
-    ![default setting](./doc/images/008_select_sdk.png "Default Gradle settings")
+    ![default setting](./doc/images/008.png "Default Gradle settings")
 
 8. If all previous step was ok then you see next screen
 
@@ -98,7 +98,7 @@ Type `DevTools`, `Web` and `Jersey` in the dependencies field
         }
     }```
 
-17. Change server port in `application.yml` to `8081` because `8080` frequently already in use.
+17. Set server port in `application.yml` to `8081`.
     ```yaml
     server:
         port: 8081
@@ -112,13 +112,128 @@ Type `DevTools`, `Web` and `Jersey` in the dependencies field
 
 1. Check that you have launched an Amazon Linux with a public DNS address and that you have SSH access (see security group) and requests to 80 / 8080 port is opened for this instance.
 
-2. Run bash script from project root dir to install jenkins on AWS linux. Recommend to use. Instead `~/.ssh/id_rsa` put path to your private ssh key.
-    ```bash
-    ssh -i ~/.ssh/id_rsa ec2-user@18.219.230.179 'bash -s' < jenkins-install.sh
+2. Run bash script from project root dir to install jenkins on AWS linux. Recommend to use. `ec2-user` - ssh user on AWS. `18.219.230.179` - ip of AWS machine. `~/.ssh/id_rsa` - path to your private ssh key.
+    ```
+       bash install_aws_jenkins.sh ec2-user 18.219.230.179 ~/.ssh/id_rsa
     ```
 
-    Or your can download script from bitbucket
+3. At the end of script working you will see link to Jenkins instance and admin password.
 
-    ```bash
-        curl -O https://bitbucket.org/andreichern0v/spring-endpoint-container/raw/d047f436b9895ebc24684ec3b3d2888f1f6c56ab/jenkins-install.sh && chmod 755 jenkins-install.sh && bash jenkins-install.sh && rm jenkins-install.sh
+## Build docker image local
+You can build docker image and run app on local machine using next steps:
+
+1. Build docker image from **initializr** repository branch
     ```
+        docker build -t icssolutions.ca/end-points.io:initializr .
+    ```
+    or from **master** branch
+    ```
+        docker build -t icssolutions.ca/end-points.io:master .
+    ```
+2. Run container with app. Spring Boot app is configured to use **8081** port then we need forwarding to this port.
+    ```
+        docker run -it -p 8081:8081 icssolutions.ca/end-points.io:initializr
+    ```
+3. Check that endpoint is working. Open browser and open link `http://localhost:8081/helloworld`
+
+## Jenkins Project Setup
+
+1. After login using `"Jenkins public ip"` from setup script, password from line `"Jenkins admin password"` and skiped! all wizard steps you can see Jenkins main page:
+
+    ![jenkins main page](./doc/images/022.png "Jenkins welcome page")
+
+2. Click  **create new jobs**. Enter project name `spring-endpoint-container`, select **Pipeline** and click **ok**.
+
+    ![Creating of jenkins job](./doc/images/023.png "Creating of jenkins job")
+
+3. Scroll down to section **Pipeline**. Then:
+    1. Select **Pipeline script from SCM** in dropdwon list (1)
+    2. Select **Git** as SCM
+    3. Paste into **repository url** url of repository, for example `https://andreichern0v@bitbucket.org/andreichern0v/spring-endpoint-container.git`
+    4. Paste into field **Branch specifier** repository branch, for example `*/feature/initializr`
+    5. Check that **Script path** filed contains `Jenkinsfile`.
+    6. Click **Save**
+
+    ![Creating of jenkins job](./doc/images/024.png "Creating of jenkins job")
+
+4. Dont clik **Build Now**. Because we need to provide DockerHub credentials
+    1. Click **Credentials** in the left menu
+
+        ![Credentials click](./doc/images/025.png "Go to credentials menu")
+    
+    2. Click on **global** link
+
+        ![Link to global cred](./doc/images/026.png "Link to global cred")
+    
+    3. Click **Add Credentials**
+
+        ![Add credentials](./doc/images/027.png "Add credentials")
+    
+    4. Fill next fields with your username on DockerHub and password. Paste to field **ID** this id `docker-registry-credentials`
+
+        ![DockerHub credentials](./doc/images/028.png "DockerHub credentials")
+    
+    5. Click **Ok**
+
+5. Now open Jenkins main page.
+
+    ![Go to mainpage](./doc/images/029.png "Jenkins mainpage")
+
+6. Click on project **spring-endpoint-container**.
+
+    ![Go to project](./doc/images/030.png "Project page")
+
+7. Click **Build Now** in left menu
+
+    ![Build now](./doc/images/031.png "Build now")
+
+8. Wait
+    
+    ![Waiting](./doc/images/032.png "waiting")
+
+9. Build success indicators
+
+    ![Success](./doc/images/033.png "Success")
+
+10. Check DockerHub account
+
+    ![Success](./doc/images/034.png "Success")
+
+11. Lets take our app from DockerHub
+
+    ```
+        docker pull andreichernov/spring-endpoint-container:latest
+    ```
+
+12. Run it. Look that we set port forwarding to app port 8081.
+
+    ```
+        docker run -it -p 8081:8081 andreichernov/spring-endpoint-container:latest
+    ```
+
+    ![Spring App Running](./doc/images/035.png "Spring App Running")
+
+    ![Spring App Running](./doc/images/036.png "Spring App Running")
+
+13. Open your browser and paste next address
+
+    ```
+        http://127.0.0.1:8081/helloworld
+    ```
+    `helloworld` here is our endpoint
+
+    ![Open browser](./doc/images/037.png "Open browser")
+
+    Congratulations if everything works successfully!
+
+14. If build was fail. Click on build number in left panel
+
+    ![If build fail](./doc/images/038.png "If build fail")
+
+15. Click on **Console output**
+
+    ![Go to build](./doc/images/039.png "Go to build")
+
+16. Read log file and try to clarify whats happen. In my example case its wrong credentials
+
+    ![Go to build](./doc/images/040.png "Go to build")
