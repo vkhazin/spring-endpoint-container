@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+sudo service jenkins start
+sudo sleep 5  # Waits 5 seconds.
 
 # 1. We need command line interface to work with Jenkins from terminal. Get it with same filename.
 JENKINS_URL="http://127.0.0.1:8080"
@@ -44,19 +46,22 @@ PLUGINS="$PLUGINS pipeline-stage-view"
 # JENKINS CLI command https://gist.github.com/amokan/3881064
 for CURRENT_PLUGIN in $(echo ${PLUGINS});
 do {
-    echo "Installation of plugin \"${CURRENT_PLUGIN}\" start ->"
+    # echo "Installation of plugin \"${CURRENT_PLUGIN}\" start ->"
     java -jar jenkins-cli.jar -s ${JENKINS_URL} install-plugin ${CURRENT_PLUGIN} --username "$JENKINS_ADMIN_NAME" --password "$JENKINS_ADMIN_PASSWORD"
-    echo "Installation of plugin \"${CURRENT_PLUGIN}\" finish <-"
+    # echo "Installation of plugin \"${CURRENT_PLUGIN}\" finish <-"
 }
-done
+done < /dev/null 
 
 # We need add  some preapproved script to scriptApproval.xml file in jenkins root dir `/var/lib/jenkins` by deafult
-verstionStr=$(sed -n '3,1p' pom.properties)
+echo "Jenkins stop"
+sudo service jenkins stop
+sudo sleep 5  # Waits 5 seconds.
+
+verstionStr=$(sed -n '3,1p' /var/lib/jenkins/plugins/script-security/META-INF/maven/org.jenkins-ci.plugins/script-security/pom.properties)
 version=$(echo ${verstionStr:8})
 
-SCRIPT_APPROVAL_FILE="
-<?xml version='1.1' encoding='UTF-8'?>
-<scriptApproval plugin="script-security@${version}">
+SCRIPT_APPROVAL_FILE="<?xml version='1.1' encoding='UTF-8'?>
+<scriptApproval plugin=\"script-security@${version}\">
   <approvedScriptHashes/>
   <approvedSignatures>
     <string>method hudson.plugins.git.BranchSpec getName</string>
@@ -66,12 +71,14 @@ SCRIPT_APPROVAL_FILE="
   <approvedClasspathEntries/>
   <pendingScripts/>
   <pendingSignatures/>
-  <pendingClasspathEntries/>
-"
-echo "$SCRIPT_APPROVAL_FILE" | sudo tee /var/lib/jenkins/scriptApproval.xml
+  <pendingClasspathEntries/>"
 
-# Add access rights to jenkins to docker using
-sudo service jenkins restart
+echo "$SCRIPT_APPROVAL_FILE" | sudo tee /var/lib/jenkins/scriptApproval.xml
+sudo chown jenkins:jenkins /var/lib/jenkins/scriptApproval.xml
+
+echo "Jenkins start"
+sudo service jenkins start
+sudo sleep 5  # Waits 5 seconds.
 
 # Check that jenkins is up
 echo "Jenkins via public ip = https://$(curl ifconfig.co -s)"
