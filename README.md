@@ -1,3 +1,4 @@
-# README #
+# Alternative Implementations #
 
-Replace as a part of a pull-request
+* [Using Initialzr](./README.md?at=refs%2Fheads%2Ffeature%2Finitializr)
+* [Using Actuator](./README.md?at=refs%2Fheads%2Ffeature%2Factuator)
